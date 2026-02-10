@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funcionários | Gestão Empresarial</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== CABEÇALHO ========== -->
+  <header class="header">
+    <div class="header__container">
+      <h1 class="header__title">💼 Gestão Empresarial</h1>
+
+      <div class="header__acoes">
+        <span id="saudacao-usuario" class="header__usuario"></span>
+
+        <button id="btn-tema" class="btn-tema" aria-label="Alternar tema">
+          🌙 Modo Escuro
+        </button>
+
+        <button id="btn-logout" class="btn-logout" aria-label="Sair">
+          Sair
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== NAVEGAÇÃO ========== -->
+  <nav class="nav">
+    <div class="nav__container">
+      <a href="index.html" class="nav__link">Início</a>
+      <a href="funcionarios.html" class="nav__link nav__link--ativo">Funcionários</a>
+      <a href="financeiro.html" class="nav__link">Financeiro</a>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- ========== DADOS DA EMPRESA ========== -->
+    <section class="empresa" aria-label="Dados da empresa">
+      <h2 class="secao__titulo">Dados da Empresa</h2>
+      <div class="empresa__card">
+        <div class="empresa__info">
+          <span class="empresa__label">Empresa</span>
+          <span id="empresa-nome" class="empresa__valor">—</span>
+        </div>
+        <div class="empresa__info">
+          <span class="empresa__label">CNPJ</span>
+          <span id="empresa-cnpj" class="empresa__valor">—</span>
+        </div>
+        <div class="empresa__info">
+          <span class="empresa__label">Tipo</span>
+          <span id="empresa-tipo" class="empresa__valor empresa__tipo-badge">—</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== GESTÃO DE CARGOS ========== -->
+    <section class="cargos-secao" aria-label="Gestão de cargos">
+      <h2 class="secao__titulo">Cargos / Funções</h2>
+
+      <div class="cargos-secao__form-wrapper">
+        <form id="form-cargo" class="form-inline">
+          <input
+            type="text"
+            id="input-cargo"
+            class="form__input"
+            placeholder="Nome do cargo (ex: Gerente, Analista...)"
+            required
+          >
+          <button type="submit" class="btn btn--adicionar btn--inline">+ Adicionar Cargo</button>
+        </form>
+      </div>
+
+      <ul id="lista-cargos" class="lista-cargos"></ul>
+      <p id="cargos-vazio" class="lista__vazia">Nenhum cargo cadastrado ainda.</p>
+    </section>
+
+    <!-- ========== GESTÃO DE FUNCIONÁRIOS ========== -->
+    <section class="funcionarios-secao" aria-label="Gestão de funcionários">
+      <div class="secao__titulo-wrapper">
+        <h2 class="secao__titulo">Funcionários</h2>
+        <span id="contador-funcionarios" class="contador-badge">0 cadastrados</span>
+      </div>
+
+      <!-- Mensagem de limite MEI -->
+      <p id="limite-mei" class="mensagem-limite oculto">
+        Empresas MEI podem cadastrar apenas 1 funcionário. Limite atingido.
+      </p>
+
+      <div class="funcionarios-secao__form-wrapper">
+        <form id="form-funcionario" class="form">
+          <div class="form__grupo">
+            <label for="func-nome" class="form__label">Nome do Funcionário</label>
+            <input
+              type="text"
+              id="func-nome"
+              class="form__input"
+              placeholder="Nome completo"
+              required
+            >
+          </div>
+
+          <div class="form__grupo">
+            <label for="func-cpf" class="form__label">CPF</label>
+            <input
+              type="text"
+              id="func-cpf"
+              class="form__input"
+              placeholder="000.000.000-00"
+              maxlength="14"
+              required
+            >
+          </div>
+
+          <div class="form__grupo">
+            <label for="func-cargo" class="form__label">Cargo / Função</label>
+            <select id="func-cargo" class="form__input" required>
+              <option value="">Selecione um cargo...</option>
+            </select>
+          </div>
+
+          <div class="form__grupo">
+            <label for="func-vinculo" class="form__label">Tipo de Vínculo</label>
+            <select id="func-vinculo" class="form__input" required>
+              <option value="">Selecione o vínculo...</option>
+              <option value="CLT">CLT</option>
+              <option value="Estagiário">Estagiário</option>
+              <option value="Freelancer">Freelancer</option>
+              <option value="Temporário">Temporário</option>
+            </select>
+          </div>
+
+          <div class="form__grupo">
+            <label for="func-salario" class="form__label">Salário (R$)</label>
+            <input
+              type="number"
+              id="func-salario"
+              class="form__input"
+              placeholder="0,00"
+              min="0.01"
+              step="0.01"
+              required
+            >
+          </div>
+
+          <button type="submit" class="btn btn--adicionar">+ Cadastrar Funcionário</button>
+        </form>
+      </div>
+
+      <ul id="lista-funcionarios" class="lista-funcionarios"></ul>
+      <p id="funcionarios-vazio" class="lista__vazia">Nenhum funcionário cadastrado ainda.</p>
+    </section>
+
+  </main>
+
+  <!-- ========== RODAPÉ ========== -->
+  <footer class="footer">
+    <p>Gestão Empresarial &copy; 2026 — Projeto de Portfólio</p>
+  </footer>
+
+  <!-- JavaScript: compartilhado + específico -->
+  <script src="shared.js"></script>
+  <script src="funcionarios.js"></script>
+</body>
+</html>

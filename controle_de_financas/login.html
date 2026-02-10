@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Gestão Empresarial & Financeiro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="login-page">
+
+    <!-- ========== CARD DE LOGIN ========== -->
+    <div class="login-card">
+
+      <!-- Logo / Título -->
+      <div class="login-card__header">
+        <h1 class="login-card__titulo">Gestão Empresarial</h1>
+        <p class="login-card__subtitulo">Controle sua empresa, funcionários e finanças</p>
+      </div>
+
+      <!-- Abas: Entrar / Criar Conta -->
+      <div class="login-abas">
+        <button class="login-aba ativo" data-aba="entrar">Entrar</button>
+        <button class="login-aba" data-aba="cadastrar">Criar Conta</button>
+      </div>
+
+      <!-- Formulário de LOGIN -->
+      <form id="form-login" class="login-form">
+        <div class="form__grupo">
+          <label for="login-email" class="form__label">E-mail</label>
+          <input
+            type="email"
+            id="login-email"
+            class="form__input"
+            placeholder="seu@email.com"
+            required
+          >
+        </div>
+
+        <div class="form__grupo">
+          <label for="login-senha" class="form__label">Senha</label>
+          <input
+            type="password"
+            id="login-senha"
+            class="form__input"
+            placeholder="Sua senha"
+            minlength="4"
+            required
+          >
+        </div>
+
+        <!-- Mensagem de erro/sucesso -->
+        <p id="login-mensagem" class="login-mensagem"></p>
+
+        <button type="submit" class="btn btn--adicionar">
+          Entrar
+        </button>
+      </form>
+
+      <!-- Formulário de CADASTRO (oculto por padrão) -->
+      <form id="form-cadastro" class="login-form oculto">
+
+        <!-- Tipo de Conta: PF ou PJ -->
+        <div class="form__grupo">
+          <label class="form__label">Tipo de Conta</label>
+          <div class="tipo-conta-toggle">
+            <button type="button" class="tipo-conta-btn ativo" data-tipo="PF">Pessoa Física</button>
+            <button type="button" class="tipo-conta-btn" data-tipo="PJ">Pessoa Jurídica</button>
+          </div>
+        </div>
+
+        <input type="hidden" id="cadastro-tipo-conta" value="PF">
+
+        <div class="form__grupo">
+          <label for="cadastro-nome" class="form__label">Nome</label>
+          <input
+            type="text"
+            id="cadastro-nome"
+            class="form__input"
+            placeholder="Seu nome"
+            required
+          >
+        </div>
+
+        <div class="form__grupo">
+          <label for="cadastro-email" class="form__label">E-mail</label>
+          <input
+            type="email"
+            id="cadastro-email"
+            class="form__input"
+            placeholder="seu@email.com"
+            required
+          >
+        </div>
+
+        <div class="form__grupo">
+          <label for="cadastro-senha" class="form__label">Senha</label>
+          <input
+            type="password"
+            id="cadastro-senha"
+            class="form__input"
+            placeholder="Mínimo 4 caracteres"
+            minlength="4"
+            required
+          >
+        </div>
+
+        <div class="form__grupo">
+          <label for="cadastro-confirmar" class="form__label">Confirmar Senha</label>
+          <input
+            type="password"
+            id="cadastro-confirmar"
+            class="form__input"
+            placeholder="Repita a senha"
+            minlength="4"
+            required
+          >
+        </div>
+
+        <!-- Campos PJ: Dados da Empresa (ocultos para PF) -->
+        <div id="campos-pj" class="campos-pj oculto">
+          <div class="login-separador">
+            <span class="login-separador__texto">Dados da Empresa</span>
+          </div>
+
+          <div class="form__grupo">
+            <label for="cadastro-empresa" class="form__label">Nome da Empresa</label>
+            <input
+              type="text"
+              id="cadastro-empresa"
+              class="form__input"
+              placeholder="Nome da sua empresa"
+            >
+          </div>
+
+          <div class="form__grupo">
+            <label for="cadastro-cnpj" class="form__label">CNPJ</label>
+            <input
+              type="text"
+              id="cadastro-cnpj"
+              class="form__input"
+              placeholder="00.000.000/0000-00"
+              maxlength="18"
+            >
+          </div>
+
+          <div class="form__grupo">
+            <label for="cadastro-tipo-empresa" class="form__label">Tipo de Empresa</label>
+            <select id="cadastro-tipo-empresa" class="form__input">
+              <option value="">Selecione o tipo...</option>
+              <option value="MEI">MEI</option>
+              <option value="ME">Microempresa (ME)</option>
+              <option value="EPP">Empresa de Pequeno Porte (EPP)</option>
+              <option value="LTDA">LTDA</option>
+              <option value="SA">Sociedade Anônima (SA)</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Mensagem de erro/sucesso -->
+        <p id="cadastro-mensagem" class="login-mensagem"></p>
+
+        <button type="submit" class="btn btn--adicionar">
+          Criar Conta
+        </button>
+      </form>
+
+    </div>
+
+    <!-- Rodapé -->
+    <p class="login-footer">Gestão Empresarial &copy; 2026</p>
+
+  </div>
+
+  <script src="auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financeiro | Gestão Empresarial</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== CABEÇALHO ========== -->
+  <header class="header">
+    <div class="header__container">
+      <h1 class="header__title">💼 Gestão Empresarial</h1>
+
+      <div class="header__acoes">
+        <span id="saudacao-usuario" class="header__usuario"></span>
+
+        <button id="btn-tema" class="btn-tema" aria-label="Alternar tema">
+          🌙 Modo Escuro
+        </button>
+
+        <button id="btn-logout" class="btn-logout" aria-label="Sair">
+          Sair
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== NAVEGAÇÃO ========== -->
+  <nav class="nav">
+    <div class="nav__container">
+      <a href="index.html" class="nav__link">Início</a>
+      <a href="funcionarios.html" class="nav__link">Funcionários</a>
+      <a href="financeiro.html" class="nav__link nav__link--ativo">Financeiro</a>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- ========== CARDS DE RESUMO FINANCEIRO ========== -->
+    <section class="resumo" aria-label="Resumo financeiro">
+      <article class="card card--entrada">
+        <h2 class="card__titulo">Entradas</h2>
+        <p class="card__valor" id="total-entradas">R$ 0,00</p>
+      </article>
+
+      <article class="card card--saida">
+        <h2 class="card__titulo">Saídas</h2>
+        <p class="card__valor" id="total-saidas">R$ 0,00</p>
+      </article>
+
+      <article class="card card--saldo">
+        <h2 class="card__titulo">Saldo</h2>
+        <p class="card__valor" id="saldo-final">R$ 0,00</p>
+      </article>
+    </section>
+
+    <!-- ========== ABA DE GRÁFICOS ========== -->
+    <section class="graficos" aria-label="Gráficos financeiros">
+      <h2 class="secao__titulo">Gráficos</h2>
+
+      <div class="graficos__container">
+        <div class="grafico-card">
+          <h3 class="grafico-card__titulo">Entradas vs Saídas</h3>
+          <div class="grafico-card__canvas-wrapper">
+            <canvas id="grafico-rosca" width="220" height="220"></canvas>
+          </div>
+          <div id="legenda-rosca" class="grafico-card__legenda"></div>
+        </div>
+      </div>
+
+      <p id="graficos-vazio" class="graficos__vazio">
+        Adicione movimentações para visualizar os gráficos.
+      </p>
+    </section>
+
+    <!-- ========== FORMULÁRIO DE CADASTRO ========== -->
+    <section class="formulario" aria-label="Cadastrar movimentação">
+      <h2 class="secao__titulo">Nova Movimentação</h2>
+
+      <form id="form-transacao" class="form">
+        <div class="form__grupo">
+          <label for="descricao" class="form__label">Descrição</label>
+          <input
+            type="text"
+            id="descricao"
+            class="form__input"
+            placeholder="Ex: Salário, Aluguel, Mercado..."
+            required
+          >
+        </div>
+
+        <div class="form__grupo">
+          <label for="valor" class="form__label">Valor (R$)</label>
+          <input
+            type="number"
+            id="valor"
+            class="form__input"
+            placeholder="0,00"
+            min="0.01"
+            step="0.01"
+            required
+          >
+        </div>
+
+        <div class="form__grupo">
+          <label for="tipo" class="form__label">Tipo</label>
+          <select id="tipo" class="form__input" required>
+            <option value="entrada">Entrada (Ganho)</option>
+            <option value="saida">Saída (Gasto)</option>
+          </select>
+        </div>
+
+        <div id="grupo-funcionario" class="form__grupo form__grupo--funcionario oculto">
+          <label for="select-funcionario" class="form__label">Funcionário (opcional)</label>
+          <select id="select-funcionario" class="form__input">
+            <option value="">Nenhum (saída comum)</option>
+          </select>
+          <span class="form__dica">Selecione um funcionário para registrar o pagamento de salário.</span>
+        </div>
+
+        <button type="submit" class="btn btn--adicionar">
+          + Adicionar
+        </button>
+      </form>
+    </section>
+
+    <!-- ========== FILTROS E AÇÕES ========== -->
+    <section class="acoes" aria-label="Filtros e ações">
+      <h2 class="secao__titulo">Movimentações</h2>
+
+      <div class="acoes__botoes">
+        <button class="btn btn--filtro ativo" data-filtro="todas">Todas</button>
+        <button class="btn btn--filtro" data-filtro="entrada">Entradas</button>
+        <button class="btn btn--filtro" data-filtro="saida">Saídas</button>
+
+        <button id="btn-limpar" class="btn btn--limpar">🗑️ Limpar Tudo</button>
+      </div>
+    </section>
+
+    <!-- ========== LISTA DE MOVIMENTAÇÕES ========== -->
+    <section class="lista" aria-label="Lista de movimentações">
+      <ul id="lista-transacoes" class="lista__items"></ul>
+
+      <p id="lista-vazia" class="lista__vazia">
+        Nenhuma movimentação cadastrada ainda.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- ========== RODAPÉ ========== -->
+  <footer class="footer">
+    <p>Gestão Empresarial &copy; 2026 — Projeto de Portfólio</p>
+  </footer>
+
+  <!-- JavaScript: compartilhado + específico -->
+  <script src="shared.js"></script>
+  <script src="financeiro.js"></script>
+</body>
+</html>

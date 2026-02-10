@@ -1,0 +1,1235 @@
+/* ============================================================
+   CONTROLE FINANCEIRO — ESTILOS
+   Arquivo organizado em seções para facilitar a manutenção.
+   Utiliza CSS Custom Properties (variáveis) para temas.
+   ============================================================ */
+
+/* ---------- RESET BÁSICO ---------- */
+/* Remove margens e paddings padrão do navegador */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---------- VARIÁVEIS DE TEMA (MODO CLARO) ---------- */
+/* Cores e valores reutilizáveis em todo o CSS */
+:root {
+  /* Cores principais */
+  --cor-entrada: #22c55e;         /* Verde para entradas/ganhos */
+  --cor-entrada-fundo: #dcfce7;
+  --cor-saida: #ef4444;           /* Vermelho para saídas/gastos */
+  --cor-saida-fundo: #fee2e2;
+  --cor-primaria: #6366f1;        /* Roxo/índigo para destaques */
+  --cor-primaria-hover: #4f46e5;
+
+  /* Cores do layout */
+  --cor-fundo: #f1f5f9;
+  --cor-superficie: #ffffff;
+  --cor-borda: #e2e8f0;
+  --cor-texto: #1e293b;
+  --cor-texto-secundario: #64748b;
+
+  /* Sombra e bordas */
+  --sombra: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --sombra-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --raio-borda: 12px;
+
+  /* Transição suave para mudanças de tema */
+  --transicao: 0.3s ease;
+}
+
+/* ---------- VARIÁVEIS DE TEMA (MODO ESCURO) ---------- */
+/* Quando a classe "tema-escuro" é adicionada ao <body>, sobrescreve as cores */
+body.tema-escuro {
+  --cor-fundo: #0f172a;
+  --cor-superficie: #1e293b;
+  --cor-borda: #334155;
+  --cor-texto: #f1f5f9;
+  --cor-texto-secundario: #94a3b8;
+  --cor-entrada-fundo: #064e3b;
+  --cor-saida-fundo: #450a0a;
+  --sombra: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --sombra-hover: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- CORPO DA PÁGINA ---------- */
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.6;
+  transition: background-color var(--transicao), color var(--transicao);
+  min-height: 100vh;
+}
+
+/* ---------- CABEÇALHO ---------- */
+.header {
+  background-color: var(--cor-superficie);
+  border-bottom: 1px solid var(--cor-borda);
+  box-shadow: var(--sombra);
+  padding: 1rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background-color var(--transicao), border-color var(--transicao);
+}
+
+.header__container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--cor-primaria);
+}
+
+/* ---------- BOTÃO DE TEMA ---------- */
+.btn-tema {
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  border: 1px solid var(--cor-borda);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all var(--transicao);
+  white-space: nowrap;
+}
+
+.btn-tema:hover {
+  box-shadow: var(--sombra-hover);
+  border-color: var(--cor-primaria);
+}
+
+/* ---------- CONTAINER PRINCIPAL ---------- */
+/* Centraliza e limita a largura do conteúdo */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ---------- CARDS DE RESUMO FINANCEIRO ---------- */
+/* Layout em grid: 3 colunas no desktop, 1 no mobile */
+.resumo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.card {
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda);
+  padding: 1.25rem;
+  box-shadow: var(--sombra);
+  border-left: 4px solid transparent;
+  transition: all var(--transicao);
+}
+
+.card:hover {
+  box-shadow: var(--sombra-hover);
+  transform: translateY(-2px);
+}
+
+/* Borda colorida diferenciando cada card */
+.card--entrada {
+  border-left-color: var(--cor-entrada);
+}
+
+.card--saida {
+  border-left-color: var(--cor-saida);
+}
+
+.card--saldo {
+  border-left-color: var(--cor-primaria);
+}
+
+.card__titulo {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cor-texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.card__valor {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Cores dos valores de cada card */
+.card--entrada .card__valor {
+  color: var(--cor-entrada);
+}
+
+.card--saida .card__valor {
+  color: var(--cor-saida);
+}
+
+.card--saldo .card__valor {
+  color: var(--cor-primaria);
+}
+
+/* Quando o saldo fica negativo, muda para vermelho */
+.card--saldo .card__valor.negativo {
+  color: var(--cor-saida);
+}
+
+/* ---------- SEÇÃO DE GRÁFICOS ---------- */
+.graficos {
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda);
+  padding: 1.5rem;
+  box-shadow: var(--sombra);
+  transition: background-color var(--transicao);
+}
+
+/* Container dos gráficos */
+.graficos__container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Esconde o container quando não há dados */
+.graficos__container.oculto {
+  display: none;
+}
+
+/* Card individual de cada gráfico */
+.grafico-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.grafico-card__titulo {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cor-texto-secundario);
+  text-align: center;
+}
+
+/* Wrapper que centraliza o canvas */
+.grafico-card__canvas-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.grafico-card__canvas-wrapper canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Legenda do gráfico de rosca */
+.grafico-card__legenda {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.legenda-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--cor-texto-secundario);
+}
+
+.legenda-cor {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* Mensagem "sem dados" dos gráficos */
+.graficos__vazio {
+  text-align: center;
+  color: var(--cor-texto-secundario);
+  padding: 1.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.graficos__vazio.oculto {
+  display: none;
+}
+
+/* ---------- TÍTULOS DE SEÇÃO ---------- */
+.secao__titulo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--cor-texto);
+}
+
+/* ---------- FORMULÁRIO ---------- */
+.formulario {
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda);
+  padding: 1.5rem;
+  box-shadow: var(--sombra);
+  transition: background-color var(--transicao);
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form__grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* Descrição ocupa a linha inteira no grid */
+.form__grupo:first-child {
+  grid-column: 1 / -1;
+}
+
+.form__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cor-texto-secundario);
+}
+
+.form__input {
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo);
+  transition: all var(--transicao);
+  outline: none;
+}
+
+.form__input:focus {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* Grupo do funcionário ocupa linha inteira */
+.form__grupo--funcionario {
+  grid-column: 1 / -1;
+}
+
+.form__grupo--funcionario.oculto {
+  display: none;
+}
+
+.form__dica {
+  font-size: 0.78rem;
+  color: var(--cor-texto-secundario);
+  font-style: italic;
+}
+
+/* Botão de adicionar ocupa a linha inteira */
+.btn--adicionar {
+  grid-column: 1 / -1;
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transicao);
+}
+
+.btn--adicionar:hover {
+  background-color: var(--cor-primaria-hover);
+  box-shadow: var(--sombra-hover);
+}
+
+.btn--adicionar:active {
+  transform: scale(0.98);
+}
+
+/* ---------- SEÇÃO DE FILTROS E AÇÕES ---------- */
+.acoes {
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda);
+  padding: 1.5rem;
+  box-shadow: var(--sombra);
+  transition: background-color var(--transicao);
+}
+
+.acoes__botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Estilo base para botões de filtro */
+.btn--filtro {
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto-secundario);
+  border: 1px solid var(--cor-borda);
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transicao);
+}
+
+.btn--filtro:hover {
+  border-color: var(--cor-primaria);
+  color: var(--cor-primaria);
+}
+
+/* Filtro ativo: destaque visual */
+.btn--filtro.ativo {
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+  border-color: var(--cor-primaria);
+}
+
+/* Botão "Limpar Tudo" alinhado à direita */
+.btn--limpar {
+  background-color: transparent;
+  color: var(--cor-saida);
+  border: 1px solid var(--cor-saida);
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: auto;
+  transition: all var(--transicao);
+}
+
+.btn--limpar:hover {
+  background-color: var(--cor-saida);
+  color: #ffffff;
+}
+
+/* ---------- LISTA DE MOVIMENTAÇÕES ---------- */
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.lista__items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Cada item da lista */
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--sombra);
+  border-left: 4px solid transparent;
+  transition: all var(--transicao);
+  animation: surgir 0.3s ease;
+}
+
+/* Animação ao adicionar item */
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.item:hover {
+  box-shadow: var(--sombra-hover);
+}
+
+/* Cores diferenciadas para entradas e saídas */
+.item--entrada {
+  border-left-color: var(--cor-entrada);
+}
+
+.item--saida {
+  border-left-color: var(--cor-saida);
+}
+
+.item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.item__descricao {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.item__valor {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* Data/hora do registro */
+.item__data {
+  font-size: 0.75rem;
+  color: var(--cor-texto-secundario);
+  margin-top: 0.15rem;
+}
+
+.item--entrada .item__valor {
+  color: var(--cor-entrada);
+}
+
+.item--saida .item__valor {
+  color: var(--cor-saida);
+}
+
+/* Botão de remover item */
+.btn--remover {
+  background-color: transparent;
+  color: var(--cor-texto-secundario);
+  border: 1px solid var(--cor-borda);
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transicao);
+  flex-shrink: 0;
+}
+
+.btn--remover:hover {
+  background-color: var(--cor-saida);
+  color: #ffffff;
+  border-color: var(--cor-saida);
+}
+
+/* Mensagem "lista vazia" */
+.lista__vazia {
+  text-align: center;
+  color: var(--cor-texto-secundario);
+  padding: 2.5rem 1rem;
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda);
+  box-shadow: var(--sombra);
+  font-size: 0.95rem;
+  transition: background-color var(--transicao);
+}
+
+/* Esconde a mensagem quando há itens na lista */
+.lista__vazia.oculto {
+  display: none;
+}
+
+/* ---------- BANNER DE PORTFÓLIO ---------- */
+.banner {
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda);
+  padding: 1rem 1.5rem;
+  box-shadow: var(--sombra);
+  border-left: 4px solid var(--cor-primaria);
+  transition: background-color var(--transicao);
+}
+
+.banner__texto {
+  font-size: 0.9rem;
+  color: var(--cor-texto-secundario);
+  line-height: 1.5;
+}
+
+.banner__texto strong {
+  color: var(--cor-primaria);
+}
+
+/* ---------- DADOS DA EMPRESA ---------- */
+.empresa__card {
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--sombra);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  transition: background-color var(--transicao);
+}
+
+.empresa__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.empresa__label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cor-texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.empresa__valor {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.empresa__tipo-badge {
+  display: inline-block;
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+  padding: 0.15rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+/* ---------- GESTÃO DE CARGOS ---------- */
+.cargos-secao__form-wrapper,
+.funcionarios-secao__form-wrapper {
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda);
+  padding: 1.5rem;
+  box-shadow: var(--sombra);
+  margin-bottom: 0.75rem;
+  transition: background-color var(--transicao);
+}
+
+/* Formulário inline para cargos (input + botão lado a lado) */
+.form-inline {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.form-inline .form__input {
+  flex: 1;
+}
+
+.btn--inline {
+  white-space: nowrap;
+  padding: 0.7rem 1.25rem;
+  flex-shrink: 0;
+}
+
+/* Lista de cargos */
+.lista-cargos {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cargo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: 20px;
+  padding: 0.4rem 0.6rem 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--cor-texto);
+  transition: all var(--transicao);
+  animation: surgir 0.3s ease;
+}
+
+.cargo-item:hover {
+  border-color: var(--cor-primaria);
+}
+
+.cargo-item__remover {
+  background: none;
+  border: none;
+  color: var(--cor-texto-secundario);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: 50%;
+  line-height: 1;
+  transition: all var(--transicao);
+}
+
+.cargo-item__remover:hover {
+  color: var(--cor-saida);
+  background-color: var(--cor-saida-fundo);
+}
+
+/* ---------- GESTÃO DE FUNCIONÁRIOS ---------- */
+.secao__titulo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.secao__titulo-wrapper .secao__titulo {
+  margin-bottom: 0;
+}
+
+/* Badge contador de funcionários */
+.contador-badge {
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+  padding: 0.2rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Mensagem de limite MEI */
+.mensagem-limite {
+  background-color: var(--cor-saida-fundo);
+  color: var(--cor-saida);
+  border: 1px solid var(--cor-saida);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.mensagem-limite.oculto {
+  display: none;
+}
+
+/* Lista de funcionários */
+.lista-funcionarios {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.func-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--sombra);
+  border-left: 4px solid var(--cor-primaria);
+  transition: all var(--transicao);
+  animation: surgir 0.3s ease;
+}
+
+.func-item:hover {
+  box-shadow: var(--sombra-hover);
+}
+
+.func-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.func-item__nome {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--cor-texto);
+}
+
+.func-item__detalhes {
+  font-size: 0.8rem;
+  color: var(--cor-texto-secundario);
+}
+
+.func-item__tags {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.func-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.func-tag--cargo {
+  background-color: var(--cor-entrada-fundo);
+  color: var(--cor-entrada);
+}
+
+.func-tag--vinculo {
+  background-color: rgba(99, 102, 241, 0.12);
+  color: var(--cor-primaria);
+}
+
+/* ---------- SEPARADOR DE SEÇÃO ---------- */
+.separador {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+
+.separador::before,
+.separador::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--cor-borda);
+}
+
+.separador__texto {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--cor-texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* ---------- TOGGLE PF / PJ NO CADASTRO ---------- */
+.tipo-conta-toggle {
+  display: flex;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tipo-conta-btn {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: none;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto-secundario);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transicao);
+}
+
+.tipo-conta-btn:not(:last-child) {
+  border-right: 1px solid var(--cor-borda);
+}
+
+.tipo-conta-btn:hover {
+  color: var(--cor-primaria);
+}
+
+.tipo-conta-btn.ativo {
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Campos de PJ: wrapper com espaçamento */
+.campos-pj {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.campos-pj.oculto {
+  display: none;
+}
+
+/* ---------- SEPARADOR NO LOGIN ---------- */
+.login-separador {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.25rem 0;
+}
+
+.login-separador::before,
+.login-separador::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--cor-borda);
+}
+
+.login-separador__texto {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cor-primaria);
+  white-space: nowrap;
+}
+
+/* ---------- BARRA DE NAVEGAÇÃO ---------- */
+.nav {
+  background-color: var(--cor-superficie);
+  border-bottom: 1px solid var(--cor-borda);
+  transition: background-color var(--transicao), border-color var(--transicao);
+}
+
+.nav__container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  padding: 0 1.5rem;
+}
+
+.nav__link {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--cor-texto-secundario);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all var(--transicao);
+}
+
+.nav__link:hover {
+  color: var(--cor-primaria);
+  background-color: rgba(99, 102, 241, 0.05);
+}
+
+.nav__link--ativo {
+  color: var(--cor-primaria);
+  border-bottom-color: var(--cor-primaria);
+  font-weight: 600;
+}
+
+/* ---------- CARDS DE NAVEGAÇÃO (Página Inicial) ---------- */
+.nav-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.nav-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda);
+  padding: 1.5rem;
+  box-shadow: var(--sombra);
+  text-decoration: none;
+  color: var(--cor-texto);
+  border-left: 4px solid var(--cor-primaria);
+  transition: all var(--transicao);
+}
+
+.nav-card:hover {
+  box-shadow: var(--sombra-hover);
+  transform: translateY(-2px);
+}
+
+.nav-card__icone {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.nav-card__conteudo {
+  flex: 1;
+}
+
+.nav-card__titulo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cor-texto);
+  margin-bottom: 0.25rem;
+}
+
+.nav-card__descricao {
+  font-size: 0.85rem;
+  color: var(--cor-texto-secundario);
+  line-height: 1.4;
+}
+
+.nav-card__seta {
+  font-size: 1.25rem;
+  color: var(--cor-primaria);
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: transform var(--transicao);
+}
+
+.nav-card:hover .nav-card__seta {
+  transform: translateX(4px);
+}
+
+/* ---------- RODAPÉ ---------- */
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--cor-texto-secundario);
+  font-size: 0.85rem;
+  margin-top: 1rem;
+}
+
+/* ---------- TELA DE LOGIN ---------- */
+/* Página inteira centralizada vertical e horizontalmente */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: var(--cor-fundo);
+}
+
+/* Card principal do login */
+.login-card {
+  background-color: var(--cor-superficie);
+  border-radius: var(--raio-borda);
+  box-shadow: var(--sombra-hover);
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  transition: background-color var(--transicao);
+}
+
+/* Cabeçalho do card (logo + subtítulo) */
+.login-card__header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.login-card__titulo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cor-primaria);
+  margin-bottom: 0.25rem;
+}
+
+.login-card__subtitulo {
+  font-size: 0.9rem;
+  color: var(--cor-texto-secundario);
+}
+
+/* Abas Entrar / Criar Conta */
+.login-abas {
+  display: flex;
+  border-bottom: 2px solid var(--cor-borda);
+  margin-bottom: 1.5rem;
+}
+
+.login-aba {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 0.65rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--cor-texto-secundario);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all var(--transicao);
+}
+
+.login-aba:hover {
+  color: var(--cor-primaria);
+}
+
+.login-aba.ativo {
+  color: var(--cor-primaria);
+  border-bottom-color: var(--cor-primaria);
+}
+
+/* Formulário de login/cadastro */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-form.oculto {
+  display: none;
+}
+
+/* Mensagem de erro ou sucesso */
+.login-mensagem {
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  display: none;
+}
+
+.login-mensagem.erro {
+  display: block;
+  color: var(--cor-saida);
+  background-color: var(--cor-saida-fundo);
+}
+
+.login-mensagem.sucesso {
+  display: block;
+  color: var(--cor-entrada);
+  background-color: var(--cor-entrada-fundo);
+}
+
+/* Rodapé da página de login */
+.login-footer {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--cor-texto-secundario);
+}
+
+/* ---------- BOTÃO DE LOGOUT (no header do dashboard) ---------- */
+.header__acoes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-logout {
+  background-color: transparent;
+  color: var(--cor-saida);
+  border: 1px solid var(--cor-saida);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all var(--transicao);
+  white-space: nowrap;
+}
+
+.btn-logout:hover {
+  background-color: var(--cor-saida);
+  color: #ffffff;
+}
+
+/* Saudação do usuário no header */
+.header__usuario {
+  font-size: 0.85rem;
+  color: var(--cor-texto-secundario);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   RESPONSIVIDADE
+   Adapta o layout para telas menores (celulares)
+   ============================================================ */
+@media (max-width: 640px) {
+  /* Cards de resumo empilham verticalmente */
+  .resumo {
+    grid-template-columns: 1fr;
+  }
+
+  /* Formulário: campos empilham */
+  .form {
+    grid-template-columns: 1fr;
+  }
+
+  .form__grupo:first-child {
+    grid-column: 1;
+  }
+
+  .btn--adicionar {
+    grid-column: 1;
+  }
+
+  .header__title {
+    font-size: 1.15rem;
+  }
+
+  .header__container {
+    flex-wrap: wrap;
+  }
+
+  .header__acoes {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .header__usuario {
+    display: none;
+  }
+
+  .card__valor {
+    font-size: 1.3rem;
+  }
+
+  /* Filtros também empilham melhor */
+  .acoes__botoes {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn--limpar {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .btn--filtro {
+    text-align: center;
+  }
+
+  /* Dados da empresa empilham */
+  .empresa__card {
+    grid-template-columns: 1fr;
+  }
+
+  /* Formulário de cargo empilha */
+  .form-inline {
+    flex-direction: column;
+  }
+
+  .btn--inline {
+    width: 100%;
+  }
+
+  /* Tags dos funcionários */
+  .func-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .func-item .btn--remover {
+    align-self: flex-end;
+  }
+
+  /* Cards de navegação empilham */
+  .nav-cards {
+    grid-template-columns: 1fr;
+  }
+
+  /* Navegação: scroll horizontal se necessário */
+  .nav__container {
+    padding: 0 1rem;
+  }
+
+  .nav__link {
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
+  }
+
+}
